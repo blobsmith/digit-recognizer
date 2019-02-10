@@ -1,5 +1,5 @@
 import numpy as np
-from model import lenet
+from model.lenet import LeNet, LenetV2
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
@@ -8,8 +8,8 @@ from sklearn.model_selection import train_test_split
 img_rows, img_cols = 28, 28
 classes = 10
 batch_size = 128
-epochs = 12
-weights_path = 'model/weights/lenet_weights.hdf5'
+epochs = 1
+weights_path = 'model/weights/lenetv2_weights.hdf5'
 
 # load data from csv
 data = np.loadtxt('data/train.csv', delimiter=',', dtype=np.float32, skiprows=1)
@@ -31,23 +31,19 @@ y_test = np_utils.to_categorical(y_test, classes)
 
 
 # initialize the optimizer and model
-model = lenet.LeNet.build((img_rows, img_cols, 1), classes)
+lenet_model = LenetV2((img_rows, img_cols, 1), classes)
+# lenet_model.model.load_weights(weights_path)
 
-# model.compile(loss=keras.losses.categorical_crossentropy,
-# 			  optimizer=keras.optimizers.Adadelta(),
-# 			  metrics=['accuracy'])
-#
-# model.fit(X_train, y_train,
-# 		  batch_size=batch_size,
-# 		  epochs=epochs,
-# 		  verbose=1,
-# 		  validation_data=(X_test, y_test))
-# score = model.evaluate(X_test, y_test, verbose=0)
-model.load_weights(weights_path)
+lenet_model.fit(X_train, y_train, X_test, y_test, batch_size, epochs)
+
+score = lenet_model.model.evaluate(X_test, y_test, verbose=1)
+lenet_model.print_score(score)
 
 
-# errors = lenet.LeNet.predict(model, X_train, y_train, 'Train set')
-# lenet.LeNet.plot(errors)
 
-# errors = lenet.LeNet.predict(model, X_test, y_test, 'Test set')
-# lenet.LeNet.plot(errors)
+
+# errors = lenet_model.predict(model, X_train, y_train, 'Train set')
+# lenet_model.plot(errors)
+
+# errors = lenet_model.predict(model, X_test, y_test, 'Test set')
+# lenet_model.plot(errors)

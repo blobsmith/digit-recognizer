@@ -1,62 +1,55 @@
-import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
-import matplotlib.pyplot as plt
-import math
+from model.abstract import Abstract
+import keras
 
-class LeNet:
+class LeNet(Abstract):
 
-    @staticmethod
-    def build(input_shape = (28, 28, 1), classes = 10):
+    def __init__(self, input_shape = (28, 28, 1), classes = 10):
+        super().__init__(input_shape, classes)
+
+    def build(self, ):
         model = Sequential()
         model.add(Conv2D(32, kernel_size=(3, 3),
                          activation='relu',
-                         input_shape=input_shape))
+                         input_shape=self.input_shape))
         model.add(Conv2D(64, (3, 3), activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.25))
         model.add(Flatten())
         model.add(Dense(128, activation='relu'))
         model.add(Dropout(0.5))
-        model.add(Dense(classes, activation='softmax'))
+        model.add(Dense(self.classes, activation='softmax'))
+        self.model = model
 
-        return model
-
-    @staticmethod
-    def predict(model, X_new, y_new, context):
-        errors = []
-        y_at = model.predict_classes(X_new)
-        # show the inputs and predicted outputs
-        for i in range(len(X_new)):
-            if y_at[i] != np.argmax(y_new[i]):
-                errors.append({
-                    'x': X_new[i],
-                    'y': np.argmax(y_new[i]),
-                    'prediction': y_at[i],
-                    'context': context
-                })
-        return errors
+    def compile(self):
+        self.model.compile(loss=keras.losses.categorical_crossentropy,
+                      optimizer=keras.optimizers.Adam(),
+                      metrics=['accuracy'])
 
 
-    @staticmethod
-    def plot(errors):
-        fig = plt.figure(figsize=(50, 50))
-        columns = 4
-        rows = 4
-        index = 1
-        for error in errors:
-            fig.add_subplot(rows, columns, index)
-            plt.imshow(1 - error['x'][:, :, 0], cmap='gray')
-            plt.text(2, 4, str(error['prediction']), fontsize=30, bbox=dict(boxstyle="round", facecolor='red', alpha=0.5))
-            plt.text(24, 4, str(error['y']), fontsize=30, bbox=dict(boxstyle="round", facecolor='green', alpha=0.5))
-            plt.title(error['context'])
+    def fit(self, X_train, y_train, X_test, y_test, batch_size, epochs):
+        self.model.fit(X_train, y_train,
+                  batch_size=batch_size,
+                  epochs=epochs,
+                  verbose=1,
+                  validation_data=(X_test, y_test))
 
-            if index % (rows*columns) == 0:
-                plt.show()
-                index = 1
-                fig = plt.figure(figsize=(50, 50))
-            else:
-                index = index + 1
+class LenetV2(LeNet):
 
-        plt.show()
+    def build(self, ):
+        model = Sequential()
+        model.add(Conv2D(32, kernel_size=(3, 3),
+                         activation='relu',
+                         input_shape=self.input_shape))
+        model.add(Conv2D(64, (3, 3), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu', kernel_initializer=keras.initializers.glorot_normal(seed=None)))
+        model.add(Dropout(0.5))
+        model.add(Dense(64, activation='relu', kernel_initializer=keras.initializers.glorot_normal(seed=None)))
+        model.add(Dropout(0.5))
+        model.add(Dense(self.classes, activation='softmax', kernel_initializer=keras.initializers.glorot_normal(seed=None)))
+        self.model = model
