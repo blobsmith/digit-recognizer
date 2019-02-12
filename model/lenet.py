@@ -10,7 +10,7 @@ class LeNet(Abstract):
     def __init__(self, input_shape = (28, 28, 1), classes = 10):
         super().__init__(input_shape, classes)
 
-    def build(self, ):
+    def build(self):
         model = Sequential()
         model.add(Conv2D(32, kernel_size=(3, 3),
                          activation='relu',
@@ -46,13 +46,13 @@ class LeNet(Abstract):
         self.model.fit(X_train, y_train,
                   batch_size=batch_size,
                   epochs=epochs,
-                  verbose=1,
-                  validation_data=(X_test, y_test),
-                  callbacks=callbacks)
+                  verbose=2,
+                  validation_data=(X_test, y_test))#,
+                  #callbacks=callbacks)
 
 class LeNetV2(LeNet):
 
-    def build(self, ):
+    def build(self):
         model = Sequential()
         model.add(Conv2D(32, kernel_size=(3, 3),
                          activation='relu',
@@ -72,3 +72,23 @@ class LeNetV2(LeNet):
         self.model.compile(loss=losses.categorical_crossentropy,
                       optimizer=optimizers.adadelta(),
                       metrics=['accuracy'])
+
+class LeNetV3(LeNet):
+
+    def build(self):
+        model = Sequential()
+        model.add(Conv2D(30, (5, 5), input_shape=(1, 28, 28), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Conv2D(15, (3, 3), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.2))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu'))
+        model.add(Dense(50, activation='relu'))
+        model.add(Dense(self.classes, activation='softmax'))
+        self.model = model
+
+    def compile(self):
+        self.model.compile(loss=losses.categorical_crossentropy,
+                           optimizer=optimizers.adam(),
+                           metrics=['accuracy'])
