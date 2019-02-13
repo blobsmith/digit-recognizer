@@ -24,6 +24,10 @@ class Abstract(ABC):
     def fit(self, X_train, y_train, X_test, y_test, batch_size, epochs):
         pass
 
+    @abstractmethod
+    def load_weights(self, test_size):
+        pass
+
     def get_errors(self, X_new, y_new, context):
         errors = []
         y_at = self.model.predict_classes(X_new)
