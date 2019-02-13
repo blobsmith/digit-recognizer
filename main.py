@@ -7,9 +7,9 @@ np.random.seed(seed)
 # input image dimensions
 img_rows, img_cols = 28, 28
 classes = 10
-batch_size = 200
-epochs = 10
-test_size = 0.1
+batch_size = 256
+epochs = 30
+test_size = 10000
 weights_path = 'model/weights/lenetv3_weights_adam'+str(test_size)+'_'+str(batch_size)+'_'+str(epochs)+'.hdf5'
 
 # initialize the optimizer and model

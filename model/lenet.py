@@ -102,9 +102,9 @@ class LeNetV3(LeNet):
 
     def build(self):
         model = Sequential()
-        model.add(Conv2D(30, (5, 5), input_shape=self.input_shape, activation='relu'))
+        model.add(Conv2D(32, (5, 5), input_shape=self.input_shape, activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Conv2D(15, (3, 3), activation='relu'))
+        model.add(Conv2D(64, (3, 3), activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.2))
         model.add(Flatten())

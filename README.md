@@ -70,3 +70,12 @@ test_size=0.1
 Kaggle: 0.98814
 
 submission_lenetv2_weights_adadelta0.1_reducelr.hdf5
+----------------------------------------------------------------------------------
+LeNetV3 - 15 Epochs - 600000 training data - Opimizer Adam 
+10000 test data (using the real minst dataset, not the one provided by kaggle)
+
+loss: 0.0111 - acc: 0.9962 - val_loss: 0.0203 - val_acc: 0.9930
+loss: 0.0203088142807
+acc: 99.3%
+
+Kaggle: 0.99885 (top 85, You advanced 1,041 places on the leaderboard!)
