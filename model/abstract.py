@@ -25,7 +25,7 @@ class Abstract(ABC):
         pass
 
     @abstractmethod
-    def load_weights(self, test_size):
+    def load_datasets(self, test_size):
         pass
 
     def get_errors(self, X_new, y_new, context):

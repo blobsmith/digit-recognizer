@@ -7,6 +7,10 @@ from keras.datasets import mnist
 import numpy as np
 from sklearn.model_selection import train_test_split
 from keras.utils import np_utils
+from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+
+seed = 7
+np.random.seed(seed)
 
 import keras
 
@@ -55,7 +59,7 @@ class LeNet(Abstract):
                   validation_data=(X_test, y_test))#,
                   #callbacks=callbacks)
 
-    def load_weights(self, test_size):
+    def load_datasets(self, test_size):
         # load data from csv
         data = np.loadtxt('data/train.csv', delimiter=',', dtype=np.float32, skiprows=1)
 
@@ -118,7 +122,7 @@ class LeNetV3(LeNet):
                            optimizer=optimizers.adam(),
                            metrics=['accuracy'])
 
-    def load_weights(self, test_size):
+    def load_datasets(self, test_size):
         (X_train, y_train), (X_test, y_test) = mnist.load_data()
         X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
         X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
@@ -130,3 +134,39 @@ class LeNetV3(LeNet):
         y_test = np_utils.to_categorical(y_test)
 
         return (X_train, y_train, X_test, y_test)
+
+class LeNetV4(LeNetV3):
+
+    def build(self):
+        model = Sequential()
+        model.add(Conv2D(32, (5, 5), input_shape=self.input_shape, activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Conv2D(64, (3, 3), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Conv2D(128, (3, 3), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.5))
+        model.add(Flatten())
+        model.add(Dense(256, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(128, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(50, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(self.classes, activation='softmax'))
+        self.model = model
+
+    def data_augmentation(self, X_train):
+        datagen = ImageDataGenerator(
+            rescale=1. / 255,
+            featurewise_center=True,
+            featurewise_std_normalization=True
+        )
+
+        datagen.fit(X_train)
+        i = 0
+        for batch in datagen.flow(X_train, batch_size=1,
+                                  save_to_dir='generator', save_prefix='mnist', save_format='jpeg'):
+            i += 1
+            if i > 20:
+                break  # otherwise the generator would loop indefinitely

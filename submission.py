@@ -1,5 +1,5 @@
 import numpy as np
-from model.lenet import LeNet, LeNetV2, LeNetV3
+from model.lenet import LeNet, LeNetV2, LeNetV3, LeNetV4
 
 
 # input image dimensions
@@ -17,7 +17,7 @@ X = data / 255
 X = X.reshape(X.shape[0], img_rows, img_cols, 1)
 
 # initialize the optimizer and model
-model_lenet = LeNetV3((img_rows, img_cols, 1), classes)
+model_lenet = LeNetV4((img_rows, img_cols, 1), classes)
 model_lenet.model.load_weights(weights_path)
 predictions = model_lenet.model.predict_classes(X)
 

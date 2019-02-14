@@ -61,7 +61,7 @@ test_size=0.1
 
 Kaggle: 0.98942
 
-submission_lenetv2_weights_adadelta0.1.hdf5
+submission_lenetv2_weights_adadelta0.1.csv
 ---------------------------------------------------------------------------------
 LeNetV2 - 40 Epochs - 37800 training data - Optimizer Adadelta
 ReduceLR
@@ -69,7 +69,7 @@ test_size=0.1
 
 Kaggle: 0.98814
 
-submission_lenetv2_weights_adadelta0.1_reducelr.hdf5
+submission_lenetv2_weights_adadelta0.1_reducelr.csv
 ----------------------------------------------------------------------------------
 LeNetV3 - 15 Epochs - 600000 training data - Opimizer Adam 
 10000 test data (using the real minst dataset, not the one provided by kaggle)
@@ -79,3 +79,35 @@ loss: 0.0203088142807
 acc: 99.3%
 
 Kaggle: 0.99885 (top 85, You advanced 1,041 places on the leaderboard!)
+
+submission_lenetv3_weights_adam10000_256_15.csv
+------------------------------------------------------------------------------------
+LeNetV4 - 30 Epochs - 600000 training data - Opimizer Adam 
+10000 test data (using the real minst dataset, not the one provided by kaggle)
+
+loss: 0.0085 - acc: 0.9974 - val_loss: 0.0333 - val_acc: 0.9924
+loss: 0.0332907435369
+acc: 99.24%
+------------------------------------------------------------------------------------
+LeNetV4 - 27 Epochs - 600000 training data - Opimizer Adam - add 1 dropout -> 0.2
+10000 test data (using the real minst dataset, not the one provided by kaggle)
+
+loss: 0.0093 - acc: 0.9970 - val_loss: 0.0329 - val_acc: 0.9927
+loss: 0.0329076314679
+acc: 99.27%
+------------------------------------------------------------------------------------
+LeNetV4 - 27 Epochs - 600000 training data - Opimizer Adam - add 3 dropout -> 0.2
+10000 test data (using the real minst dataset, not the one provided by kaggle)
+
+loss: 0.0127 - acc: 0.9963 - val_loss: 0.0367 - val_acc: 0.9926
+loss: 0.0367099021842
+acc: 99.26%
+best: (loss: 0.0242 - acc: 0.9930 - val_loss: 0.0329 - val_acc: 0.9927)
+
+------------------------------------------------------------------------------------
+LeNetV4 - 60 Epochs - 600000 training data - Opimizer Adam - add 3 dropout all dropout from 0.2 to -> 0.5
+10000 test data (using the real minst dataset, not the one provided by kaggle)
+
+loss: 0.0319 - acc: 0.9929 - val_loss: 0.0454 - val_acc: 0.9930
+loss: 0.0453695610985
+acc: 99.3%
