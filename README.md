@@ -111,3 +111,51 @@ LeNetV4 - 60 Epochs - 600000 training data - Opimizer Adam - add 3 dropout all d
 loss: 0.0319 - acc: 0.9929 - val_loss: 0.0454 - val_acc: 0.9930
 loss: 0.0453695610985
 acc: 99.3%
+------------------------------------------------------------------------------------
+LeNetV4 - 60 Epochs - 1200000 training data - Opimizer Adam - add 3 dropout all dropout from 0.2 to -> 0.5
+20000 test data (using the real minst dataset with data augmentation)
+learning rate 0.0007
+
+Epoch 60/60
+loss: 0.0107 - acc: 0.9969 - val_loss: 0.0367 - val_acc: 0.9925
+loss: 0.03665131819150088
+acc: 99.245%
+best: Epoch 35/60 (loss: 0.0162 - acc: 0.9950 - val_loss: 0.0290 - val_acc: 0.9933)
+
+Kaggle: 0.99885 (top 73, You advanced 12 places on the leaderboard!)
+
+------------------------------------------------------------------------------------
+LeNetV5 - 15 Epochs - 180000 training data - Opimizer Adam - add 2 dropout 0.5
+10000 test data
+
+Epoch 15/15
+Kaggle: 0.99828 - position: 73
+
+------------------------------------------------------------------------------------
+LeNetV5 - 30 Epochs - 180000 training data - Opimizer Adam - add 2 dropout 0.5
+10000 test data
+
+Epoch 30/30 - test 0.9951
+Kaggle: 0.99857 - position: 73
+--------------------------------------------------------------------------------------
+LeNetV5 - 60 Epochs - 180000 training data - Opimizer Adam - add 2 dropout 0.5
+10000 test data
+
+Epoch 60/60
+loss: 0.0323 - acc: 0.9898 - val_loss: 0.0224 - val_acc: 0.9954
+loss: 0.02238038053059306
+acc: 99.53999999999999%
+
+Kaggle: 0.99914 - position: 73
+--------------------------------------------------------------------------------------
+LeNetV6 - 100 Epochs - 180000 training data - Opimizer Adam - add 2 batchnormalization
+10000 test data
+
+Epoch 100/100
+loss: 0.0227 - acc: 0.9927 - val_loss: 0.0142 - val_acc: 0.9963
+loss: 0.014198343401295983
+acc: 99.63%
+
+Kaggle:  0.99957 (You advanced 24 places on the leaderboard!)
+
+
